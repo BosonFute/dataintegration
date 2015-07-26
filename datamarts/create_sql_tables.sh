@@ -22,7 +22,7 @@ if [ -f $outfile ]
         exit
 fi
 
-echo "CREATE DATABASE $database;"
+echo "CREATE DATABASE $database CHARACTER SET utf8 COLLATE utf8_general_ci;"
 echo "USE $database;" >> $outfile
 echo "SET @@Max_error_count=65535;" >> $outfile
 
@@ -36,7 +36,8 @@ do
     csvsql $i >> $outfile
     echo "LOAD DATA LOCAL INFILE '$i'" >> $outfile
     echo "INTO TABLE $name" >> $outfile
-    echo "FIELDS TERMINATED BY '$sep';" >> $outfile
+    echo "FIELDS TERMINATED BY '$sep'" >> $outfile
+    echo "IGNORE 1 LINES;" >> $outfile
     echo "" >> $outfile
 done
 
